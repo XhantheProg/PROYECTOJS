@@ -1,13 +1,13 @@
-import { renderDashboard } from "./pages/dashboard";
-import { renderHome } from "./pages/home";
-import { renderProduct } from "./pages/products";
-
+import { renderDashboard } from "./pages/dashboard.js";
+import { renderHome } from "./pages/home.js";
+import { renderProduct } from "./data/products.js";
+//para importar primero opngo las renders luego importo arriba de mi
 const routes={
     dashboard: renderDashboard,
     products: renderProduct,
 }
 
-class Router{
+export class Router{
     constructor(root){
         this.root=root;
         // window.addEventListener("hashchange", ()=> this.handleRouteChange());

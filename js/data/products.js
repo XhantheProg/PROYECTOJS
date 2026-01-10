@@ -10,7 +10,7 @@ export function renderProduct(root){
 
 
 
-const productsSeed =[
+export const productsSeed =[
     {id:"p-001", name: "Teclado Mecanico", category: "perifericos", price: 2500, stock: 15, sold: 5, active:true},
     {id:"p-002", name: "Mouse Gamer", category: "perifericos", price: 1200, stock: 25, sold: 10, active:true},
     {id:"p-003", name: "Monitor 24\"", category: "monitores", price: 8500, stock: 8, sold: 3, active:true},
