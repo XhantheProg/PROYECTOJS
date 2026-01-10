@@ -4,3 +4,5 @@ export function renderDashboard(root){
     <p>Esta es la pagina de Dashboard</p>
     `;
 }
+
+//tarea: añadir algo que puede tener un dashboard
