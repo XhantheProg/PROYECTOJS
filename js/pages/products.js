@@ -1,4 +1,4 @@
-import { getCategories, filterByCategory } from "../services/poducts_service";
+import { getCategories, filterByCategory } from "../services/poducts_service.js";
 
 export function renderProductsPage(root) {
     const categories = getCategories();

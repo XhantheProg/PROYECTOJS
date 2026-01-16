@@ -1,10 +1,12 @@
-import { productsSeed } from "../data/products";
-import { readJSON, writeJSON } from "./storage";
+import { productsSeed } from "../data/products.js";
+import { readJSON, writeJSON } from "./storage.js";
 
 const KEY= "products_db_v18";
 
-export function initProduct(){
+export function initProducts(){
     const existing= readJSON(KEY); //leer los productos almacenados
+    console.log('esiste');
+    
     if(!existing){
         writeJSON (KEY, productsSeed);
     }

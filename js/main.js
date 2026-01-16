@@ -1,10 +1,9 @@
 import { Router } from "./router.js";
+import { initProducts } from "./services/poducts_service.js";
 
 const app = document.getElementById('app');
 const router = new Router(app);
-
-
-
+initProducts()
 
 //funcion para marcar activo el dashboard
 
