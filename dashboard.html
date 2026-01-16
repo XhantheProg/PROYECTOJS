@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #0f172a;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+            color: #e5e7eb;
+        }
+
+        .principal{
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        h1{
+            text-align: center;
+            padding: 16px 0;
+            border-radius: 10px;
+            background: linear-gradient(90deg,#22c55e,#16a34a);
+            color: #022c22;
+            margin-bottom: 30px;
+        }
+
+        .container-images{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card{
+            position: relative;
+            border-radius: 16px;
+            min-height: 350px;
+            background-size: cover;
+            background-position: center;
+            transition: transform .3s ease, box-shadow .3s ease;
+            box-shadow: 0 10px 25px #111;
+        }
+
+        .card:hover{
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.5);
+        }
+
+        .card::after{
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,.65),
+                rgba(0,0,0,.15)
+            );
+        }
+
+        .card-title{
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        #img-1{
+            background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71');
+        }
+
+        #img-2{
+            background-image: url('https://images.unsplash.com/photo-1556155092-8707de31f9c4');
+        }
+
+        #img-3{
+            background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0');
+        }
+
+        #img-4{
+            background-image: url('https://images.unsplash.com/photo-1556761175-4b46a572b786');
+        }
+
+    </style>
+</head>
+<body>
+    <div class="principal-dashboard">
+        <h1>Dashboard</h1>
+
+        <div class="container-images">
+            <div class="card-dash" id="img-1">
+                <div class="card-title">Analiticas</div>
+            </div>
+
+            <div class="card-dash" id="img-2">
+                <div class="card-title">Usuarios</div>
+            </div>
+
+            <div class="card-dash" id="img-3">
+                <div class="card-title">Ventas</div>
+            </div>
+
+            <div class="card-dash" id="img-4">
+                <div class="card-title">Reportes</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

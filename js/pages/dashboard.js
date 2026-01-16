@@ -1,8 +1,25 @@
-export function renderDashboard(root){
-    root.innerHTML=`
-    <h1>Dashboard</h1>
-    <p>Esta es la pagina de Dashboard</p>
-    `;
-}
+export function renderDashboardPage(root){
+    root.innerHTML = `
+<div class="principal-dashboard">
+        <h1>Dashboard</h1>
 
-//tarea: añadir algo que puede tener un dashboard
+        <div class="container-images">
+            <div class="card-dash" id="img-1">
+                <div class="card-title">Analiticas</div>
+            </div>
+
+            <div class="card-dash" id="img-2">
+                <div class="card-title">Usuarios</div>
+            </div>
+
+            <div class="card-dash" id="img-3">
+                <div class="card-title">Ventas</div>
+            </div>
+
+            <div class="card-dash" id="img-4">
+                <div class="card-title">Reportes</div>
+            </div>
+        </div>
+    </div>
+    `
+}
