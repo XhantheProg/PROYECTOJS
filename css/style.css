@@ -38,6 +38,11 @@ body{
     padding: 10px 12px;
     border-radius: 8px ;
 }
+
+.menu-item:hover{
+    background: #ccc;
+}
+
 .menu-item.active{
     background: aquamarine;
     border-color: brown;
