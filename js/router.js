@@ -1,25 +1,24 @@
-import { renderDashboard } from "./pages/dashboard.js";
-import { renderHome } from "./pages/home.js";
-import { renderProduct } from "./data/products.js";
-//para importar primero opngo las renders luego importo arriba de mi
-const routes={
-    dashboard: renderDashboard,
-    products: renderProduct,
+import {renderDashboardPage} from "./pages/dashboard.js";
+import {renderProductsPage} from "./pages/products.js";
+import {renderAboutPage} from "./pages/about.js";
+
+const routes ={
+    dashboard:renderDashboardPage,
+    products: renderProductsPage,
+    about: renderAboutPage
 }
 
 export class Router{
     constructor(root){
-        this.root=root;
-        // window.addEventListener("hashchange", ()=> this.handleRouteChange());
-        // this.handleRouteChange();
+        this.root = root;
     }
     navigate(pageName){
-        const pageFn=routes[pageName]
+        const pageFn = routes[pageName];
         if(pageFn){
-            this.root.innerHTML=""; //para limpiar el contenedor
-            pageFn(this.root)
-        } else {
-            this.root.innerHTML="<h1>404 - Pagina no encontrada</h1>";
+            this.root.innerHTML = "";
+            pageFn(this.root);
+        }else{
+            this.root.innerHTML = "<p>Pagina no encontrada</p>";
         }
     }
 }

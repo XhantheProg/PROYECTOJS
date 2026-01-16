@@ -1,6 +1,6 @@
-export function renderHome(root){
-    root.innerHTML=`
-    <h1>Dashboard</h1>
-    <p>Esta es la pagina Home</p>
-    `;
+export function renderHomePAge(root){
+    root.innerHTML = `
+        <h1>Home</h1>
+        <p>Esta es la pagina home </p>
+    `
 }
