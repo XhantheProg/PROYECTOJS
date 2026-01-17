@@ -2,13 +2,11 @@ import { renderDashboardPage } from "./pages/dashboard.js";
 import { renderProductsPage } from "./pages/products.js";
 import { renderAboutPage } from "./pages/about.js";
 
-// Definir las rutas disponibles
 const routes = {
     dashboard: renderDashboardPage,
     products: renderProductsPage,
     about: renderAboutPage
 };
-
 // Clase Router para manejar la navegación
 export class Router {
     constructor(root) {

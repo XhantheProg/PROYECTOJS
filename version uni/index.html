@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Modular JS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            background: #1e293b;
+            padding: 24px;
+            border-right: 1px solid #334155;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: #22c55e;
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 12px 16px;
+            text-align: left;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #334155;
+            color: #e5e7eb;
+        }
+
+        .menu-item.active {
+            background: #22c55e;
+            color: #022c22;
+            font-weight: 600;
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 32px;
+        }
+
+        .title {
+            font-size: 32px;
+            margin-bottom: 24px;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* DASHBOARD STYLES */
+        .principal-dashboard h1 {
+            text-align: center;
+            padding: 16px 0;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: #022c22;
+            margin-bottom: 30px;
+        }
+
+        .container-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card-dash {
+            position: relative;
+            border-radius: 16px;
+            min-height: 300px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .card-dash:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-dash::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
+            border-radius: 16px;
+        }
+
+        .card-title {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        #img-1 { background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71'); }
+        #img-2 { background-image: url('https://images.unsplash.com/photo-1556155092-8707de31f9c4'); }
+        #img-3 { background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0'); }
+        #img-4 { background-image: url('https://images.unsplash.com/photo-1556761175-4b46a572b786'); }
+
+        /* PRODUCTS STYLES */
+        .products-page h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #22c55e;
+        }
+
+        .filter-section {
+            margin-bottom: 24px;
+        }
+
+        .filter-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        #cat {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 14px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #e5e7eb;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #cat:focus {
+            outline: none;
+            border-color: #22c55e;
+        }
+
+        #list ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        #list li {
+            background: #1e293b;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #22c55e;
+            transition: transform 0.2s;
+        }
+
+        #list li:hover {
+            transform: translateX(4px);
+            background: #334155;
+        }
+
+        #list b {
+            color: #22c55e;
+        }
+
+        /* ABOUT PAGE */
+        .about-page {
+            max-width: 800px;
+        }
+
+        .about-page h1 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: #22c55e;
+        }
+
+        .about-page p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid #334155;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .layout {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>  
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">Proyecto JS E18</div>
+            <nav class="menu">
+                <button class="menu-item" data-page="dashboard">Dashboard</button>
+                <button class="menu-item" data-page="products">Productos</button>
+                <button class="menu-item" data-page="about">Acerca de</button>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1 class="title">SPA Modular JS</h1>
+            <div id="app"></div>
+        </main>
+    </div>
+
+    <script type="module">
+        // ============ STORAGE SERVICE ============
+        function readJSON(key, fallback = null) {
+            const raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : fallback;
+        }
+
+        function writeJSON(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        // ============ PRODUCTS DATA ============
+        const productsSeed = [
+            { id: 1, name: "Blasphemous", category: "Videojuegos", price: 99.99, sold: 150 },
+            { id: 2, name: "Clair Obscur Expedition 33", category: "Videojuegos", price: 18.97, sold: 89 },
+            { id: 3, name: "Fallout 3", category: "Videojuegos", price: 49.95, sold: 320 },
+            { id: 4, name: "Mafia II", category: "Videojuegos", price: 29.99, sold: 210 },
+            { id: 5, name: "Monster Hunter World", category: "Videojuegos", price: 159.99, sold: 445 },
+            { id: 6, name: "Red Dead Redemption 2", category: "Videojuegos", price: 455.00, sold: 580 },
+            { id: 7, name: "Laptop Gaming", category: "Electrónica", price: 1299.99, sold: 45 },
+            { id: 8, name: "Auriculares Inalámbricos", category: "Electrónica", price: 89.99, sold: 230 }
+        ];
+
+        // ============ PRODUCTS SERVICE ============
+        const KEY = "products_db_v18";
+
+        function initProducts() {
+            const existing = readJSON(KEY);
+            if (!existing) {
+                writeJSON(KEY, productsSeed);
+            }
+        }
+
+        function getAllProducts() {
+            return readJSON(KEY, []);
+        }
+
+        function getProductById(id) {
+            return getAllProducts().find(p => p.id === id) || null;
+        }
+
+        function addProduct(product) {
+            const products = getAllProducts();
+            products.push(product);
+            writeJSON(KEY, products);
+        }
+
+        function deleteProduct(id) {
+            const products = getAllProducts();
+            const next = products.filter(p => p.id !== id);
+            writeJSON(KEY, next);
+            return products.length !== next.length;
+        }
+
+        function updateProduct(id, patch) {
+            const products = getAllProducts();
+            const index = products.findIndex(p => p.id === id);
+            if (index === -1) return false;
+            
+            const existing = products[index];
+            const updated = { ...existing, ...patch };
+            products[index] = updated;
+            writeJSON(KEY, products);
+            return true;
+        }
+
+        function getCategories() {
+            const products = getAllProducts();
+            const cats = new Set(products.map(p => p.category));
+            return ["Todos", ...Array.from(cats)];
+        }
+
+        function filterByCategory(category) {
+            const products = getAllProducts();
+            if (!category || category === "Todos") return products;
+            return products.filter(p => p.category === category);
+        }
+
+        function getTopSold(limit = 5) {
+            return [...getAllProducts()]
+                .sort((a, b) => (b.sold ?? 0) - (a.sold ?? 0))
+                .slice(0, limit);
+        }
+
+        // ============ PAGES ============
+        function renderDashboardPage(root) {
+            root.innerHTML = `
+                <div class="principal-dashboard">
+                    <h1>Dashboard</h1>
+                    <div class="container-images">
+                        <div class="card-dash" id="img-1">
+                            <div class="card-title">Analíticas</div>
+                        </div>
+                        <div class="card-dash" id="img-2">
+                            <div class="card-title">Usuarios</div>
+                        </div>
+                        <div class="card-dash" id="img-3">
+                            <div class="card-title">Ventas</div>
+                        </div>
+                        <div class="card-dash" id="img-4">
+                            <div class="card-title">Reportes</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProductsPage(root) {
+            const categories = getCategories();
+            root.innerHTML = `
+                <div class="products-page">
+                    <h2>Productos</h2>
+                    <div class="filter-section">
+                        <label for="cat">Filtrar por categoría:</label>
+                        <select id="cat">
+                            ${categories.map(c => `<option value="${c}">${c}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div id="list"></div>
+                </div>
+            `;
+            
+            const list = root.querySelector("#list");
+            const select = root.querySelector("#cat");
+
+            function draw(category) {
+                const items = filterByCategory(category);
+                list.innerHTML = `
+                    <ul>
+                        ${items.map(p => `
+                            <li>
+                                ${p.name} - <b>${p.category}</b><br>
+                                <small>Vendidos: ${p.sold} | Precio: $${p.price}</small>
+                            </li>
+                        `).join("")}
+                    </ul>
+                `;
+            }
+
+            draw("Todos");
+            select.addEventListener("change", (e) => draw(e.target.value));
+        }
+
+        function renderAboutPage(root) {
+            root.innerHTML = `
+                <div class="about-page">
+                    <h1>Acerca de</h1>
+                    <p>
+                        Esta es una aplicación SPA (Single Page Application) construida con JavaScript vanilla.
+                        Utiliza un sistema de routing del lado del cliente para navegar entre páginas sin recargar.
+                    </p>
+                    <p style="margin-top: 16px;">
+                        <strong>Características:</strong><br>
+                        • Router personalizado<br>
+                        • Sistema de componentes modulares<br>
+                        • Persistencia de datos con localStorage<br>
+                        • Diseño responsive<br>
+                    </p>
+                </div>
+            `;
+        }
+
+        // ============ ROUTER ============
+        const routes = {
+            dashboard: renderDashboardPage,
+            products: renderProductsPage,
+            about: renderAboutPage
+        };
+
+        class Router {
+            constructor(root) {
+                this.root = root;
+            }
+
+            navigate(pageName) {
+                const pageFn = routes[pageName];
+                if (pageFn) {
+                    this.root.innerHTML = "";
+                    pageFn(this.root);
+                } else {
+                    this.root.innerHTML = "<p>Página no encontrada</p>";
+                }
+            }
+        }
+
+        // ============ MAIN APP ============
+        const app = document.getElementById('app');
+        const router = new Router(app);
+        
+        initProducts();
+
+        function setActive(page) {
+            document.querySelectorAll('.menu-item').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.page === page);
+            });
+        }
+
+        document.querySelectorAll('.menu-item').forEach(btn => {
+            btn.addEventListener("click", () => {
+                const page = btn.dataset.page;
+                router.navigate(page);
+                setActive(page);
+            });
+        });
+
+        router.navigate("dashboard");
+        setActive("dashboard");
+    </script>
+</body>
+</html>

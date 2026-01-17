@@ -3,7 +3,6 @@ import { readJSON, writeJSON } from "./storage.js";
 
 const KEY = "products_db_v18";
 
-// Inicializar productos en localStorage
 export function initProducts() {
     const existing = readJSON(KEY);
     if (!existing) {
@@ -11,17 +10,15 @@ export function initProducts() {
     }
 }
 
-// Obtener todos los productos
 export function getAllProducts() {
     return readJSON(KEY, []);
 }
 
-// Obtener producto por ID
 export function getProductById(id) {
-    return getAllProducts().find(p => p.id === id) || null;
+    const products = getAllProducts();
+    return products.find(p => p.id === id) || null;
 }
 
-// Agregar nuevo producto
 export function addProduct(product) {
     const products = getAllProducts();
     products.push(product);
@@ -29,7 +26,6 @@ export function addProduct(product) {
     return product;
 }
 
-// Eliminar producto por ID
 export function deleteProduct(id) {
     const products = getAllProducts();
     const next = products.filter(p => p.id !== id);
@@ -37,7 +33,6 @@ export function deleteProduct(id) {
     return products.length !== next.length;
 }
 
-// Actualizar producto existente
 export function updateProduct(id, patch) {
     const products = getAllProducts();
     const index = products.findIndex(p => p.id === id);
@@ -47,21 +42,23 @@ export function updateProduct(id, patch) {
     }
     
     const existing = products[index];
-    const updated = { ...existing, ...patch };
+    const updated = { 
+        ...existing, 
+        ...patch,
+        updatedAt: new Date().toISOString().slice(0, 10)
+    };
     products[index] = updated;
     writeJSON(KEY, products);
     
     return updated;
 }
 
-// Obtener categorías únicas
 export function getCategories() {
     const products = getAllProducts();
     const cats = new Set(products.map(p => p.category));
-    return ["Todos", ...Array.from(cats)];
+    return ["Todos", ...Array.from(cats).sort()];
 }
 
-// Filtrar productos por categoría
 export function filterByCategory(category) {
     const products = getAllProducts();
     if (!category || category === "Todos") {
@@ -70,19 +67,31 @@ export function filterByCategory(category) {
     return products.filter(p => p.category === category);
 }
 
-// Obtener productos más vendidos
-export function getTopSold(limit = 5) {
-    return [...getAllProducts()]
-        .sort((a, b) => (b.sold ?? 0) - (a.sold ?? 0))
-        .slice(0, limit);
+export function isDuplicateName(name, excludeId = null) {
+    const products = getAllProducts();
+    const normalized = name.trim().toLowerCase();
+    
+    return products.some(p => {
+        if (excludeId && p.id === excludeId) {
+            return false;
+        }
+        return p.name.trim().toLowerCase() === normalized;
+    });
 }
 
-// Buscar productos por nombre
-export function searchProducts(query) {
+export function generateProductId() {
     const products = getAllProducts();
-    const lowerQuery = query.toLowerCase();
-    return products.filter(p => 
-        p.name.toLowerCase().includes(lowerQuery) ||
-        p.description?.toLowerCase().includes(lowerQuery)
-    );
+    if (products.length === 0) {
+        return "prod_1";
+    }
+    
+    const numbers = products
+        .map(p => {
+            const match = String(p.id).match(/\d+$/);
+            return match ? parseInt(match[0]) : 0;
+        })
+        .filter(n => !isNaN(n));
+    
+    const maxNum = numbers.length > 0 ? Math.max(...numbers) : 0;
+    return `prod_${maxNum + 1}`;
 }
