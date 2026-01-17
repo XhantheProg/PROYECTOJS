@@ -65,3 +65,13 @@ function getTopSold(limit=5){
         .sort((a,b)=> (b.sold ?? 0) - (a.sold ?? 0)) //ordenar los productos por cantidad vendida
         .slice(0,limit); //devolver los primeros n productos
 }
+
+export function generateProduct(){
+    return "p-"+ Date.now().toString().slice(-6)
+}
+
+export function isDuplicateName(name){
+    const products=getAllProducts()
+    const normalized=name.trim().toLowerCase();
+    return products.some((p)=>p.name.trim().toLowerCase() === normalized)
+}
