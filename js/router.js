@@ -1,24 +1,33 @@
-import {renderDashboardPage} from "./pages/dashboard.js";
-import {renderProductsPage} from "./pages/products.js";
-import {renderAboutPage} from "./pages/about.js";
+import { renderDashboardPage } from "./pages/dashboard.js";
+import { renderProductsPage } from "./pages/products.js";
+import { renderAboutPage } from "./pages/about.js";
 
-const routes ={
-    dashboard:renderDashboardPage,
+// Definir las rutas disponibles
+const routes = {
+    dashboard: renderDashboardPage,
     products: renderProductsPage,
     about: renderAboutPage
-}
+};
 
-export class Router{
-    constructor(root){
+// Clase Router para manejar la navegación
+export class Router {
+    constructor(root) {
         this.root = root;
     }
-    navigate(pageName){
+
+    navigate(pageName) {
         const pageFn = routes[pageName];
-        if(pageFn){
+        
+        if (pageFn) {
             this.root.innerHTML = "";
             pageFn(this.root);
-        }else{
-            this.root.innerHTML = "<p>Pagina no encontrada</p>";
+        } else {
+            this.root.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h2 style="color: #ef4444;">Página no encontrada</h2>
+                    <p style="color: #94a3b8; margin-top: 8px;">La página "${pageName}" no existe.</p>
+                </div>
+            `;
         }
     }
 }

@@ -1,62 +1,117 @@
-*{
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin: 0;
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f172a;
+    color: #e5e7eb;
 }
 
-.layout{
+.layout {
     display: flex;
-     min-height: 100vh; /* Altura mínima para que ocupe toda la pantalla */
+    min-height: 100vh;
 }
 
-.sidebar{
-    width: 220px;
-    background-color: blanchedalmond;
-    padding: 14px 14px 0 14px;
-
+/* ============ SIDEBAR ============ */
+.sidebar {
+    width: 250px;
+    background: #1e293b;
+    padding: 24px;
+    border-right: 1px solid #334155;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
 }
 
-.brand{
-    font-weight: bold;
+.brand {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #22c55e;
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 12px 16px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background: #334155;
+    color: #e5e7eb;
+}
+
+.menu-item.active {
+    background: #22c55e;
+    color: #022c22;
+    font-weight: 600;
+}
+
+/* ============ CONTENT ============ */
+.content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 32px;
+}
+
+.title {
+    font-size: 32px;
+    margin-bottom: 24px;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============ ABOUT PAGE ============ */
+.about-page {
+    max-width: 800px;
+}
+
+.about-page h1 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    color: #22c55e;
+}
+
+.about-page p {
+    line-height: 1.6;
+    color: #cbd5e1;
     margin-bottom: 16px;
 }
 
-.menu{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #334155;
+    }
 
-.menu-item{
-    border: 1px solid transparent;
-    cursor: pointer;
-    background: white;
-    text-align: left;
-    padding: 10px 12px;
-    border-radius: 8px ;
-}
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
 
-.menu-item:hover{
-    background: #ccc;
+    .layout {
+        flex-direction: column;
+    }
 }
-
-.menu-item.active{
-    background: aquamarine;
-    border-color: brown;
-}
-.content{
-    padding: 10px 10px 0 10px;
-
-}
-.title{
-    margin: 0 0 14px 0;
-}
-#app{
-    padding: 18px;
-    border-radius: 10px;
-    background: white;
-}
-
